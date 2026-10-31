@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>COPD Prediction System BY M.Adeeb Ali Full Stack  Developer</title>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.453.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--tx:#0f1b2d;--mu:#5b6b82;--bd:#e2e8f0;--pr:#2563eb;--pr2:#06b6d4;--ok:#16a34a;--wa:#f59e0b;--hi:#ea580c;--vh:#dc2626;--in:#f8fafc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1220;--card:#131c2e;--tx:#e8eefb;--mu:#93a3bd;--bd:#25324a;--in:#0f1727;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0b1220;--card:#131c2e;--tx:#e8eefb;--mu:#93a3bd;--bd:#25324a;--in:#0f1727;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,sans-serif;min-height:100vh}
+.wrap{max-width:1100px;margin:auto;padding:20px 16px 48px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.logo{display:flex;gap:12px;align-items:center}
+.logo i{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--pr),var(--pr2));display:grid;place-items:center;color:#fff}
+h1{font-size:1.25rem}.sub{color:var(--mu);font-size:.8rem}
+.btn{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:9px 14px;border-radius:10px;cursor:pointer;font:inherit;display:inline-flex;gap:6px;align-items:center}
+.btn.p{background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff;border:0;font-weight:600}
+.hero{background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff;border-radius:18px;padding:22px;margin-bottom:20px;display:flex;gap:14px;align-items:center}
+.hero p{opacity:.92;font-size:.9rem}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:0 4px 18px #0000000a}
+.card h2{font-size:1rem;display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.f{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:520px){.f{grid-template-columns:1fr}}
+label{display:block;font-size:.78rem;color:var(--mu);margin-bottom:4px;font-weight:600}
+input,select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--in);color:var(--tx);font:inherit}
+input:focus,select:focus{outline:2px solid var(--pr);border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:flex;gap:6px;align-items:center;padding:8px 12px;border:1px solid var(--bd);border-radius:999px;cursor:pointer;background:var(--in);font-size:.85rem;user-select:none;margin:0;color:var(--tx)}
+.chip svg{width:16px;height:16px}
+.chip:has(input:checked){background:var(--pr);color:#fff;border-color:var(--pr)}
+.chip input{display:none}
+.ratio{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--in);border:1px dashed var(--bd);font-size:.85rem;display:flex;justify-content:space-between}
+.act{display:flex;gap:10px;margin-top:16px}.act .btn{flex:1;justify-content:center}
+#res{text-align:center}#res h2{justify-content:center}
+.gauge{width:240px;max-width:100%;margin:auto;display:block}
+.gauge .sc{font:700 38px Inter,sans-serif;fill:var(--tx)}
+.lvl{display:inline-block;padding:5px 14px;border-radius:999px;color:#fff;font-weight:700;margin:6px 0}
+.stage{color:var(--mu);font-size:.88rem;margin-bottom:10px}
+.bars{text-align:left;margin-top:14px}
+.bar{display:grid;grid-template-columns:110px 1fr 34px;gap:8px;align-items:center;font-size:.78rem;margin:6px 0}
+.bar div{height:8px;border-radius:9px;background:var(--bd);overflow:hidden}
+.bar b{display:block;height:100%;background:linear-gradient(90deg,var(--pr),var(--pr2))}
+ul.rec{text-align:left;list-style:none;padding:0;margin-top:12px}
+ul.rec li{display:flex;gap:8px;padding:8px 0;border-top:1px solid var(--bd);font-size:.86rem}
+ul.rec svg{flex:none;color:var(--pr);width:18px;height:18px}
+.empty{color:var(--mu);padding:30px 0}
+.hist{margin-top:18px;overflow-x:auto}.hist table{width:100%;border-collapse:collapse;font-size:.82rem}
+.hist td,.hist th{padding:8px;border-bottom:1px solid var(--bd);text-align:left}
+.disc{margin-top:18px;font-size:.78rem;color:var(--mu);display:flex;gap:8px}
+@media print{header .btn,.act,.hist,.btn{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo"><i data-lucide="wind"></i><div><h1>COPD Prediction System BY M.Adeeb Ali Full Stack  Developer</h1><div class="sub">Clinical risk screening · GOLD staging</div></div></div>
+  <button class="btn" id="theme" aria-label="Toggle theme"><i data-lucide="sun-moon"></i></button>
+</header>
+
+<div class="hero"><i data-lucide="activity" style="width:38px;height:38px;flex:none"></i>
+<div><b>Early detection saves lungs.</b><p>Enter spirometry, lifestyle and symptom data to get an instant COPD risk score, GOLD stage and care suggestions.</p></div></div>
+
+<div class="grid">
+<section class="card">
+  <h2><i data-lucide="clipboard-list"></i>Patient data</h2>
+  <div class="f">
+    <div><label>Patient name</label><input id="name" placeholder="Optional"></div>
+    <div><label>Age (years)</label><input id="age" type="number" min="18" max="100" value="55"></div>
+    <div><label>Sex</label><select id="sex"><option>Male</option><option>Female</option></select></div>
+    <div><label>Smoking status</label><select id="smk"><option value="0">Never</option><option value="1">Former</option><option value="2" selected>Current</option></select></div>
+    <div><label>Pack-years</label><input id="py" type="number" min="0" max="150" value="20"></div>
+    <div><label>SpO₂ (%)</label><input id="spo" type="number" min="60" max="100" value="95"></div>
+    <div><label>FEV₁ (L)</label><input id="fev" type="number" step="0.01" min="0.2" max="7" value="2.1"></div>
+    <div><label>FVC (L)</label><input id="fvc" type="number" step="0.01" min="0.5" max="8" value="3.5"></div>
+    <div><label>FEV₁ % predicted</label><input id="fp" type="number" min="10" max="150" value="70"></div>
+    <div><label>Breathlessness (mMRC 0–4)</label><select id="mm"><option>0</option><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+  </div>
+  <div class="chips">
+    <label class="chip"><input type="checkbox" id="cough"><i data-lucide="mic"></i>Chronic cough</label>
+    <label class="chip"><input type="checkbox" id="spu"><i data-lucide="droplets"></i>Sputum</label>
+    <label class="chip"><input type="checkbox" id="wh"><i data-lucide="audio-waveform"></i>Wheezing</label>
+    <label class="chip"><input type="checkbox" id="ex"><i data-lucide="factory"></i>Dust / fumes exposure</label>
+    <label class="chip"><input type="checkbox" id="fh"><i data-lucide="users"></i>Family history</label>
+  </div>
+  <div class="ratio"><span>FEV₁/FVC ratio</span><b id="rt">–</b></div>
+  <div class="act"><button class="btn p" id="go"><i data-lucide="sparkles"></i>Predict risk</button><button class="btn" id="rs"><i data-lucide="rotate-ccw"></i>Reset</button></div>
+</section>
+
+<section class="card" id="res">
+  <h2><i data-lucide="heart-pulse"></i>Prediction result</h2>
+  <div id="out"><div class="empty"><i data-lucide="stethoscope" style="width:42px;height:42px"></i><p>Fill the form and press <b>Predict risk</b>.</p></div></div>
+</section>
+</div>
+
+<section class="card hist"><h2><i data-lucide="history"></i>Session history</h2>
+<table><thead><tr><th>Time</th><th>Patient</th><th>Score</th><th>Level</th><th>GOLD</th></tr></thead><tbody id="hb"><tr><td colspan="5" class="sub">No predictions yet.</td></tr></tbody></table></section>
+
+<p class="disc"><i data-lucide="shield-alert" style="flex:none;width:18px"></i><span>Educational screening tool only. It does not replace spirometry interpretation or a clinician’s diagnosis. Seek urgent care for severe breathlessness or blue lips.</span></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id),v=id=>+$(id).value,c=id=>$(id).checked,H=[];
+const ico=()=>window.lucide&&lucide.createIcons();
+const ratio=()=>v('fev')/v('fvc');
+const upd=()=>{$('rt').textContent=isFinite(ratio())?(ratio()*100).toFixed(1)+'%'+(ratio()<.7?' · obstructed':' · normal'):'–'};
+['fev','fvc'].forEach(i=>$(i).addEventListener('input',upd));upd();
+
+function score(){
+  const r=ratio(),a=v('age'),s=v('smk'),f=v('fp'),o=v('spo');
+  const p={
+    'Age':a>=70?15:a>=60?12:a>=50?8:a>=40?4:0,
+    'Smoking':[0,8,15][s]+Math.min(v('py'),40)/2,
+    'Airflow ratio':r<.7?30:r<.75?8:0,
+    'FEV₁ %':f<30?15:f<50?12:f<80?7:0,
+    'SpO₂':o<90?10:o<94?5:0,
+    'Dyspnea':v('mm')*2.5,
+    'Symptoms':(c('cough')?4:0)+(c('spu')?4:0)+(c('wh')?3:0),
+    'Exposure/Genes':(c('ex')?5:0)+(c('fh')?3:0)
+  };
+  const t=Math.min(100,Math.round(Object.values(p).reduce((x,y)=>x+y,0)));
+  const L=t<25?['Low','--ok']:t<50?['Moderate','--wa']:t<75?['High','--hi']:['Very high','--vh'];
+  const g=r<.7?(f>=80?'GOLD 1 – Mild':f>=50?'GOLD 2 – Moderate':f>=30?'GOLD 3 – Severe':'GOLD 4 – Very severe'):'No airflow obstruction';
+  return{p,t,L,g,r,time:new Date().toLocaleTimeString(),who:$('name').value||'Anonymous'};
+}
+function recs({t,r}){
+  const R=[];
+  if(r<.7)R.push(['clipboard-check','Ratio below 0.70: confirm with post-bronchodilator spirometry (GOLD criteria).']);
+  if(v('smk')==2)R.push(['cigarette-off','Stop smoking – the most effective way to slow lung decline.']);
+  if(v('spo')<92)R.push(['siren','Low oxygen saturation: seek medical review promptly.']);
+  if(t>=50)R.push(['stethoscope','Book a pulmonologist consultation and discuss bronchodilator therapy.']);
+  if(c('ex'))R.push(['hard-hat','Reduce dust/fume exposure; use a certified respirator at work.']);
+  R.push(['syringe','Keep influenza and pneumococcal vaccinations up to date.'],['footprints','Stay active: pulmonary rehabilitation and regular walking help.']);
+  return R;
+}
+function run(){
+  const d=score(),col=`var(${d.L[1]})`,arc=(Math.PI*80).toFixed(1),off=(arc*(1-d.t/100)).toFixed(1);
+  $('out').innerHTML=`
+  <svg class="gauge" viewBox="0 0 200 120"><path d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--bd)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="${col}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${arc}" stroke-dashoffset="${off}"><animate attributeName="stroke-dashoffset" from="${arc}" to="${off}" dur="1s" fill="freeze"/></path>
+  <text x="100" y="92" text-anchor="middle" class="sc">${d.t}</text><text x="100" y="112" text-anchor="middle" fill="var(--mu)" font-size="11">/ 100 risk score</text></svg>
+  <span class="lvl" style="background:${col}">${d.L[0]} risk</span>
+  <p class="stage"><b>${d.g}</b> · FEV₁/FVC ${(d.r*100).toFixed(1)}%</p>
+  <div class="bars">${Object.entries(d.p).map(([k,x])=>`<div class="bar"><span>${k}</span><div><b style="width:${Math.min(100,x*3.4)}%"></b></div><span>${Math.round(x)}</span></div>`).join('')}</div>
+  <ul class="rec">${recs(d).map(([i,t])=>`<li><i data-lucide="${i}"></i><span>${t}</span></li>`).join('')}</ul>
+  <button class="btn" style="margin-top:12px" onclick="print()"><i data-lucide="printer"></i>Print report</button>`;
+  H.unshift(d);
+  $('hb').innerHTML=H.slice(0,8).map(h=>`<tr><td>${h.time}</td><td>${h.who.replace(/</g,'&lt;')}</td><td>${h.t}</td><td>${h.L[0]}</td><td>${h.g.split(' –')[0]}</td></tr>`).join('');
+  ico();
+}
+$('go').onclick=()=>{if(!isFinite(ratio())||v('fev')>v('fvc'))return alert('Please enter valid spirometry values (FEV₁ ≤ FVC).');run()};
+$('rs').onclick=()=>{document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=0);$('name').value='';$('out').innerHTML='<div class="empty"><p>Form reset.</p></div>'};
+$('theme').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+ico();
+</script>
+</body>
+</html>
